@@ -22,6 +22,10 @@ A simple, clean web application to **track income, expenses, balance, and spendi
 
 - 📁 Data Saved in **Local Storage**
 
+- 📆 Datepicker for customizable date input
+
+- 🔔 Notify using react-toastify when added & deleted income and expense
+
 ---
 
 ## ⚙️ Tech Stack
