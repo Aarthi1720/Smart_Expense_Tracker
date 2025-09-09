@@ -7,17 +7,17 @@ const FilterPanel = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    //If preset range, split it into min/max
+    // If preset range, split it into min/max
     if (name === "amountRange") {
-      let [min, max] = value.split("-");
+      const [min, max] = value.split("-");
       setFilters((prev) => ({
         ...prev,
-        amountRange: value, //store the selected value too
-        minAmount: min,
-        maxAmount: max === "+" ? "" : max,
+        amountRange: value, // keep selected value
+        minAmount: min || "",
+        maxAmount: max === "+" ? "" : max || "",
       }));
     } else {
-      // Category etc.
+      // Category, startDate, endDate, etc.
       setFilters((prev) => ({
         ...prev,
         [name]: value,
@@ -35,6 +35,7 @@ const FilterPanel = () => {
       amountRange: "",
     });
   };
+
   return (
     <div className="bg-[#F7F9FC] p-4 rounded-md md:mt-4 sm:flex sm:justify-between md:relative mb-1">
       <div className="flex flex-wrap gap-3">
@@ -64,7 +65,7 @@ const FilterPanel = () => {
           </label>
           <select
             name="amountRange"
-            value={filters.amountRange}
+            value={filters.amountRange || ""}  // <- safe default
             onChange={handleChange}
             className="text-sm text-gray-400 rounded font-semibold border-2 border-gray-400 focus:border-gray-400 focus:outline-none cursor-pointer"
           >
@@ -77,9 +78,8 @@ const FilterPanel = () => {
         </div>
 
         {/* Date Range */}
-
         <div className="flex gap-2">
-          {/* Custom from date */}
+          {/* From */}
           <div className="space-x-2 xl:flex xl:flex-col">
             <label className="text-gray-700 text-[16px] font-semibold">
               From
@@ -93,7 +93,7 @@ const FilterPanel = () => {
             />
           </div>
 
-          {/* Custom to date */}
+          {/* To */}
           <div className="space-x-2 xl:flex xl:flex-col">
             <label className="text-gray-700 text-[16px] font-semibold">
               To
@@ -108,6 +108,7 @@ const FilterPanel = () => {
           </div>
         </div>
       </div>
+
       <button
         onClick={clearFilters}
         className="px-3 py-1 text-white font-semibold rounded mt-2 md:absolute md:top-2 md:right-2 bg-gradient-to-tr from-[#ABADB0] to-[#7585BA] hover:bg-gradient-to-bl hover:from-[#ABADB0] hover:to-[#7585BA] transition duration-500 cursor-pointer"

@@ -6,8 +6,8 @@ const CategoryTotals = () => {
 
   const categories = ["Food", "Travel", "Bills", "Others"];
 
-  //Calculate total for each category
-  const CategoryTotals = categories.map((cat) => {
+  // Calculate total for each category
+  const totals = categories.map((cat) => {
     const total = expenses
       .filter((exp) => exp.category === cat)
       .reduce((sum, exp) => sum + Number(exp.amount), 0);
@@ -17,7 +17,7 @@ const CategoryTotals = () => {
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-      {CategoryTotals.map((cat) => (
+      {totals.map((cat) => (
         <div
           key={cat.category}
           className="bg-white p-4 rounded shadow flex flex-col items-center justify-center"
@@ -34,7 +34,7 @@ const CategoryTotals = () => {
               </span>
             )}
             {cat.category === "Bills" && (
-              <span className="bg-violet-100 p-2 rounded-md text-xl mdLtext-sm lg:text-xl">
+              <span className="bg-violet-100 p-2 rounded-md text-xl md:text-sm lg:text-xl">
                 📰
               </span>
             )}

@@ -1,81 +1,104 @@
-# 📊 Smart Expense Tracker
+# 📊 Smart Expense Tracker (Full-Stack)
 
-A simple, clean web application to **track income, expenses, balance, and spending categories** — built with **ReactJS** and **Tailwind CSS**. Visualize spending with **charts** and see where your money goes.
+A simple, clean web application to **track income, expenses, balance, and spending categories** — built with **ReactJS, Tailwind CSS** (frontend) and **Node.js, Express, MongoDB Atlas** (backend). Visualize spending with **charts** and see where your money goes.
+
+🌐 **Live App:** https://<your-frontend>.vercel.app  
+⚙️ **API (Backend):** https://<your-backend>.onrender.com  
 
 ---
 
 ## ✨ Features
 
 - ✏ Add & edit **incomes** and **expenses**
-
 - 🧪 Filter expenses by **date, amount,** and **category**
-
-- 📃 View **totals** and **category-wise** breakdown.
-
+- 📃 View **totals** and **category-wise** breakdown
 - 📈 Visual **Pie Chart** for Spending Breakdown
-
 - 🗂 **Summary Cards**: Income, Expense, Balance
-
 - 🧾 View All Transactions in One Place
-
 - 🎨 Clean, responsive dashboard for desktop & mobile
-
-- 📁 Data Saved in **Local Storage**
-
+- 🌍 **Persistent storage with MongoDB Atlas**
+- 🔄 **REST API (CRUD)** built with Express
 - 📆 **Datepicker** for customizable date input
-
-- 🔔 Notify using **react-toastify** when added & deleted income and expense
+- 🔔 Notifications with **react-toastify**
 
 ---
 
 ## ⚙️ Tech Stack
+
+### Frontend
 - ⚛ ReactJS + Context API
-
 - 🎨 Tailwind CSS
-
 - 🔹 Heroicons
+- 🧿 Recharts (charts & data viz)
+- 🌌 Lottie animations
+- 🚀 Deployed on **Vercel**
 
-- 🧿 Recharts for charts
-
-- 🌌 Lottie for Animations
+### Backend
+- 🟢 Node.js + Express
+- 🍃 MongoDB Atlas + Mongoose
+- 🔑 CORS, dotenv, morgan
+- 🚀 Deployed on **Render**
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure (Frontend)
 
-📦 SmartExpenseTracker
- ┣ 📂 src
- ┃ ┣ 📂 components
- ┃ ┃ ┣ Home.jsx
- ┃ ┃ ┣ SummaryCards.jsx
- ┃ ┃ ┣ ExpenseChart.jsx
- ┃ ┃ ┣ Transactions.jsx
- ┃ ┃ ┣ CategoryTotals.jsx
- ┃ ┃ ┣ AddIncomeForm.jsx
- ┃ ┃ ┣ IncomeList.jsx
- ┃ ┃ ┣ AddExpenseForm.jsx
- ┃ ┃ ┣ ExpenseList.jsx
- ┃ ┃ ┣ FilterPanel.jsx
- ┃ ┃ ┣ MobileViewHomePage.jsx
- ┃ ┣ App.jsx
- ┃ ┣ index.css
- ┃ ┣ main.jsx
+📦 SmartExpenseTracker  
+ ┣ 📂 src  
+ ┃ ┣ 📂 components  
+ ┃ ┃ ┣ Home.jsx  
+ ┃ ┃ ┣ SummaryCards.jsx  
+ ┃ ┃ ┣ ExpenseChart.jsx  
+ ┃ ┃ ┣ Transactions.jsx  
+ ┃ ┃ ┣ CategoryTotals.jsx  
+ ┃ ┃ ┣ AddIncomeForm.jsx  
+ ┃ ┃ ┣ IncomeList.jsx  
+ ┃ ┃ ┣ AddExpenseForm.jsx  
+ ┃ ┃ ┣ ExpenseList.jsx  
+ ┃ ┃ ┣ FilterPanel.jsx  
+ ┃ ┃ ┣ MobileViewHomePage.jsx  
+ ┃ ┣ 📂 context  
+ ┃ ┃ ┗ ExpenseContext.jsx  
+ ┃ ┣ 📂 services  
+ ┃ ┃ ┗ api.js  
+ ┃ ┣ App.jsx  
+ ┃ ┣ index.css  
+ ┃ ┣ main.jsx  
 
- ---
+---
 
 ## ❓ Why This Project?
-✅ Demonstrates React state management, context usage, conditional rendering, and responsive design.
-✅ Clean and clear component-based architecture.
-✅ Perfect mini project to showcase skills on your resume or portfolio.
+
+✅ Demonstrates **React state management** (Context API), conditional rendering, and responsive design.  
+✅ Showcases **full-stack development** with REST API + database.  
+✅ Clean and clear **component-based architecture**.  
+✅ Perfect **portfolio project** to showcase front-end + back-end integration.  
 
 ---
 
 ## 🤝 What I Learned
 
-Built with React hooks, context for global state, and reusable components. Practiced clean UI design and responsive layouts.
+- Managing **global state** with React Context
+- Building **REST APIs** with Express & MongoDB
+- Handling **CRUD operations** from frontend to backend
+- Deploying frontend (Vercel) and backend (Render) with environment variables
+- Implementing **filters, charts, and responsive UI**
 
 ---
 
 ## 📸 Preview
 
-![alt text](image.png)
+![Dashboard Preview](image.png)
+
+---
+
+## 🚀 Run Locally
+
+### Backend
+```bash
+git clone https://github.com/<you>/smart-expense-backend
+cd smart-expense-backend
+npm install
+npm run dev
+```
+---

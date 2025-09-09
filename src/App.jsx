@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SummaryCards from "./components/SummaryCards";
 import {
-  BackwardIcon,
   BanknotesIcon,
   ChartPieIcon,
   CreditCardIcon,
@@ -28,11 +27,10 @@ const App = () => {
         setActiveSection("dashboard");
       }
     };
-
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, [activeSection]);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#BDD6F2]">
       {/* Header */}
@@ -45,41 +43,36 @@ const App = () => {
       {/* SIDEBAR FOR DESKTOP */}
       <div className="hidden md:flex flex-col bg-[#05375E] text-white w-16 py-6 fixed top-0 left-0 h-screen items-center space-y-6 border-2 border-white rounded-md">
         <button
+          aria-label="Go to Home"
           onClick={() => setActiveSection("home")}
-          className={`cursor-pointer ${
-            activeSection === "home" ? "text-green-600" : ""
-          }`}
+          className={`cursor-pointer ${activeSection === "home" ? "text-green-600" : ""}`}
         >
           <ChartPieIcon className="w-8 h-8 text-white" />
         </button>
         <button
+          aria-label="Go to Dashboard"
           onClick={() => setActiveSection("dashboard")}
-          className={`cursor-pointer ${
-            activeSection === "dashboard" ? "text-green-600" : ""
-          }`}
+          className={`cursor-pointer ${activeSection === "dashboard" ? "text-green-600" : ""}`}
         >
           <HomeIcon className="w-8 h-8" />
         </button>
         <button
+          aria-label="Go to Income"
           onClick={() => setActiveSection("income")}
-          className={`cursor-pointer ${
-            activeSection === "income" ? "text-green-600" : ""
-          }`}
+          className={`cursor-pointer ${activeSection === "income" ? "text-green-600" : ""}`}
         >
           <BanknotesIcon className="w-8 h-8" />
         </button>
         <button
+          aria-label="Go to Expense"
           onClick={() => setActiveSection("expense")}
-          className={`cursor-pointer ${
-            activeSection === "expense" ? "text-green-600" : ""
-          }`}
+          className={`cursor-pointer ${activeSection === "expense" ? "text-green-600" : ""}`}
         >
           <CreditCardIcon className="w-8 h-8" />
         </button>
       </div>
 
       {/* MAIN CONTENT */}
-
       <main className="flex-1 md:ml-16 p-2">
         {/* Home */}
         {activeSection === "home" && (
@@ -88,11 +81,9 @@ const App = () => {
             <button
               onClick={() => {
                 if (window.innerWidth < 640) {
-                  //Mobile: show cards menu
-                  setActiveSection("mobileMenu");
+                  setActiveSection("mobileMenu"); // Mobile: show cards menu
                 } else {
-                  //Desktop: go to directly to dashboard
-                  setActiveSection("dashboard");
+                  setActiveSection("dashboard"); // Desktop: go straight to dashboard
                 }
               }}
               className="mt-6 px-6 py-3 bg-gradient-to-tl from-[#F598C0] to-[#72AFED] text-white rounded font-bold hover:bg-gradient-to-br hover:from-[#F598C0] hover:to-[#72AFED] cursor-pointer transition duration-500 focus:outline-none"
@@ -115,17 +106,14 @@ const App = () => {
         {/* Always SHOW SUMMARY */}
         {activeSection !== "home" && activeSection !== "mobileMenu" && (
           <div>
-            <button
-              className="sm:hidden"
-              onClick={() => setActiveSection("mobileMenu")}
-            >
+            <button className="sm:hidden" onClick={() => setActiveSection("mobileMenu")}>
               <ArrowLeftCircleIcon className="w-8 h-8 text-white" />
             </button>
             <SummaryCards />
           </div>
         )}
 
-        {/* ---DASHBOARD (DESKTOP or MOBILE when active*/}
+        {/* DASHBOARD */}
         {activeSection === "dashboard" && (
           <div className="grid md:grid-cols-3 gap-2 mt-4">
             <div className="md:col-span-2 flex flex-col gap-4">

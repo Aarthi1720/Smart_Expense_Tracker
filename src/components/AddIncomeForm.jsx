@@ -5,30 +5,31 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AddIncomeForm = ({ setActiveSection }) => {
-  const { incomes, setIncomes, editingIncome, setEditingIncome } =
+  // pull only what's needed from context
+  const { editingIncome, setEditingIncome, addIncome, updateIncome } =
     useContext(ExpenseContext);
 
-  //Local form state
+  // Local form state
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState("");
 
-  //When editingIncome Changes, fill the form
+  // When editingIncome changes, prefill/clear the form
   useEffect(() => {
     if (editingIncome) {
       setAmount(editingIncome.amount);
       setDate(new Date(editingIncome.date));
-      setNote(editingIncome.note);
+      setNote(editingIncome.note || "");
     } else {
-      //Clear form if not editing
       setAmount("");
       setDate(new Date());
       setNote("");
     }
   }, [editingIncome]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!amount) {
       toast.error("Amount is required!");
       return;
@@ -38,39 +39,30 @@ const AddIncomeForm = ({ setActiveSection }) => {
       return;
     }
 
-    if (editingIncome) {
-      //If editing update the income
+    const payload = {
+      amount: parseFloat(amount),
+      date: new Date(date).toISOString().split("T")[0], // YYYY-MM-DD
+      note,
+    };
 
-      const updatedIncome = incomes.map((inc) =>
-        inc.id === editingIncome.id
-          ? {
-              ...inc,
-              amount: parseFloat(amount),
-              date: new Date(date).toISOString().split("T")[0],
-              note,
-            }
-          : inc
-      );
+    try {
+      if (editingIncome) {
+        await updateIncome(editingIncome.id, payload);
+        toast.success("Income updated!");
+        setEditingIncome(null);
+      } else {
+        await addIncome(payload);
+        toast.success("Income added!");
+      }
 
-      setIncomes(updatedIncome);
-      toast.success("Income updated!");
-      setEditingIncome(null);
-    } else {
-      //Add new income
-      const newIncome = {
-        id: Date.now(),
-        amount: parseFloat(amount),
-        date: new Date(date).toISOString().split("T")[0], //Format: YYYY-MM-DD
-        note,
-      };
-      setIncomes([...incomes, newIncome]);
-      toast.success("Income added!");
+      // reset form
+      setAmount("");
+      setDate(new Date());
+      setNote("");
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
     }
-
-    //Clear the form and hide it
-    setAmount("");
-    setDate(new Date());
-    setNote("");
   };
 
   const handleClear = () => {
@@ -82,22 +74,22 @@ const AddIncomeForm = ({ setActiveSection }) => {
 
   const handleClose = () => {
     setActiveSection("dashboard");
-    setEditingIncome(null);
-    setAmount("");
-    setDate(new Date());
-    setNote("");
+    handleClear();
   };
+
   return (
     <div className="bg-[#ffff] p-4 md:px-4 md:py-2 rounded-md shadow mt-4 relative">
       <h2 className="text-3xl font-bold md:mt-5 mb-5 text-[#127487]">
         {editingIncome ? "✏Edit Income" : "💰Add Income"}
       </h2>
+
       <button
         onClick={handleClose}
         className="px-4 py-2 bg-gradient-to-bl from-[#eeabab] to-[#f380b5] hover:bg-gradient-to-tr hover:from-[#FF0000] hover:to-[#FA7DB7] font-semibold text-white rounded absolute right-2 top-4 md:right-4 md:top-7 cursor-pointer transition duration-500"
       >
         Close
       </button>
+
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label className="block mb-1 font-semibold text-[#2A7B9B] text-xl">
@@ -108,25 +100,25 @@ const AddIncomeForm = ({ setActiveSection }) => {
             value={amount}
             placeholder="Enter amount"
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full border-2 border-[#1D6E91] px-3 py-2 rounded focus:outline-none caret-[#57C785] text-gray-500 font-semibold "
+            className="w-full border-2 border-[#1D6E91] px-3 py-2 rounded focus:outline-none caret-[#57C785] text-gray-500 font-semibold"
             required
           />
         </div>
+
         <div>
           <label className="block mb-1 font-semibold text-[#2A7B9B] text-xl">
             Date
           </label>
           <DatePicker
             selected={date}
-            onChange={(selectedDate) => {
-              setDate(selectedDate);
-            }}
-            dateFormat={"yyyy-MM-dd"}
-            className="w-full border-2 border-[#1D6E91] p-2 rounded focus:outline-none caret-[#57C785] text-gray-500 font-semibold "
+            onChange={(selectedDate) => setDate(selectedDate)}
+            dateFormat="yyyy-MM-dd"
+            className="w-full border-2 border-[#1D6E91] p-2 rounded focus:outline-none caret-[#57C785] text-gray-500 font-semibold"
             calendarClassName="my-calendar"
             required
           />
         </div>
+
         <div>
           <label className="block mb-1 font-semibold text-[#2A7B9B] text-xl">
             Note
@@ -135,10 +127,11 @@ const AddIncomeForm = ({ setActiveSection }) => {
             type="text"
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            className="w-full border-2 border-[#1D6E91] px-3 py-2 rounded focus:outline-none caret-[#57C785] text-gray-500 font-semibold "
+            className="w-full border-2 border-[#1D6E91] px-3 py-2 rounded focus:outline-none caret-[#57C785] text-gray-500 font-semibold"
             placeholder="Optional"
           />
         </div>
+
         <div className="flex justify-between items-center md:mt-10">
           <button
             type="submit"
@@ -146,6 +139,7 @@ const AddIncomeForm = ({ setActiveSection }) => {
           >
             {editingIncome ? "Update" : "Add Income"}
           </button>
+
           <button
             type="button"
             onClick={handleClear}
