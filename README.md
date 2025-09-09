@@ -2,8 +2,8 @@
 
 A simple, clean web application to **track income, expenses, balance, and spending categories** — built with **ReactJS, Tailwind CSS** (frontend) and **Node.js, Express, MongoDB Atlas** (backend). Visualize spending with **charts** and see where your money goes.
 
-🌐 **Live App:** https://<your-frontend>.vercel.app  
-⚙️ **API (Backend):** https://<your-backend>.onrender.com  
+🌐 **Live App:** https://smart-expense-tracker-nine.vercel.app  
+⚙️ **API (Backend):** https://smart-expense-backend-n1u3.onrender.com  
 
 ---
 
